@@ -1,0 +1,54 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        applicationId "com.infinite.dynamicloadjar"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+//删除之前打出的包，默认将包打在'build/libs/'下
+task deleteOldJar(type: Delete) {
+    delete 'build/libs/loadJar.jar'
+}
+//打包操作
+task makePluginJar(type: Jar) {
+    //要打成的包的名字
+    baseName 'loadJar'
+    //选取要打包的文件夹
+    from('build/intermediates/javac/debug/classes/com/infinite/dynamicloadjar/plugin/')
+    //需要跟实际类的包名路径一样
+    into('com/infinite/dynamicloadjar/plugin')
+//    排除在外的文件
+//    exclude('BuildConfig.class', 'R.class', 'MainActivity.class')
+//    排除以R$开头的文件
+//    exclude{ it.name.startsWith('R$');}
+}
+//打包,在右侧边栏中Gradle-->app-->other-->makePluginJar
+//最后在build/libs/文件夹下执行命令,loadJar1.jar是生成的文件
+// dx --dex --output=loadJar1.jar loadJar.jar
+makePluginJar.dependsOn(deleteOldJar, build)
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+}
