@@ -17,6 +17,8 @@ import java.lang.reflect.Method;
 
 import dalvik.system.DexClassLoader;
 
+//import com.infinite.dynamicloadjar.plugin.CountryBean;
+
 public class MainActivity extends BaseActivity {
     private static final String[] PERMISSION_LIST = new String[]{
             Manifest.permission.WRITE_EXTERNAL_STORAGE

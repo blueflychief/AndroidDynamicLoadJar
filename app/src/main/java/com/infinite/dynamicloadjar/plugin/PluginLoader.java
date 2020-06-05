@@ -2,6 +2,8 @@
 //
 //import android.util.Log;
 //
+//import com.infinite.dynamicloadjar.Utils;
+//
 ///**
 // * Email: 690797861@qq.com
 // * Author: Infinite
@@ -15,6 +17,7 @@
 //    }
 //
 //    public String loadMethod(String name) {
+//        Utils.fitPlugin(name);
 //        return "PluginLoader say Hello to " + name;
 //    }
 //}
